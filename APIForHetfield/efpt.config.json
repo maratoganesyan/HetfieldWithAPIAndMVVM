@@ -1,0 +1,101 @@
+﻿{
+   "CodeGenerationMode": 3,
+   "ContextClassName": "Db",
+   "ContextNamespace": "Models",
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": true,
+   "ModelNamespace": "Models",
+   "OutputContextPath": "Models",
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "APIForHetfield",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[CarColors]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CarConfigurations]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CarEngines]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CarPhotos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Cars]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CarsPassport]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CarStatuses]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CarTranssmissions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CarTypes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Genders]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ManufactureYears]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Orders]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[OrderStatuses]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Roles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Users]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "desktop-s7olevv\\sqlexpress.HetfieldDuplicate.dbo",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false
+}
