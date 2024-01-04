@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace Hetfield.Models;
 
-public partial class Car : IDbModel
+public partial class Car : DbModelBase
 {
     public int IdCar { get; set; }
 

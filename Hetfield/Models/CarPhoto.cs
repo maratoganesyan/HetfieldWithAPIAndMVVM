@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Hetfield.Models;
 
-public partial class CarPhoto : IDbModel
+public partial class CarPhoto : DbModelBase
 {
     public int IdCar { get; set; }
 

@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="Hetfield.View.AddAndChangeViews.CarColorAddAndChange"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hetfield.View.AddAndChangeViews"
+             mc:Ignorable="d" 
+              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:modern="http://schemas.modernwpf.com/2019"
+        Height="450"
+        Width="320"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             Background="Transparent">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="17*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Top">
+            <ui:Button Icon="Circle12"
+                       IconForeground="Red"
+                       Padding="0"
+                       Command="{Binding CloseCommand}"
+                       FontSize="20"
+                       IconFilled="True"
+                       BorderBrush="Transparent"
+                       Background="Transparent" />
+        </StackPanel>
+
+        <modern:SimpleStackPanel 
+                    Grid.Row="1"
+                                 Spacing="20"
+                    x:Name="MainPanel"
+                    VerticalAlignment="Top">
+            <StackPanel HorizontalAlignment="Center"
+                        Margin="0 0 0 20">
+                <Image Source="/Resources/Logo.png"
+                       Width="220" />
+            </StackPanel>
+            <ui:TextBox PlaceholderText="Введите название цвета"
+                        FontSize="16"
+                        MaxLength="20"
+                        x:Name="ColorNameTextBox"
+                        Text="{Binding TableValue.ColorName}"
+                        SelectionBrush="#b672db"/>
+
+            <xctk:ColorPicker Background="Transparent"
+                              Foreground="Black"
+                              SelectedColor="{Binding TableValue.Hex}"
+                              Height="{Binding ElementName=ColorNameTextBox, Path=ActualHeight}"/>
+
+
+            <ui:Button Content="Сохранить"
+                       HorizontalAlignment="Stretch"
+                       FontSize="16"
+                       Command="{Binding SaveChangesCommand}"
+                       BorderBrush="White"
+                       BorderThickness="0.3"/>
+        </modern:SimpleStackPanel>
+    </Grid>
+</UserControl>

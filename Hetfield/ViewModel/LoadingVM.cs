@@ -32,11 +32,22 @@ namespace Hetfield.ViewModel
         }
         private async void LoadDbData()
         {
-            ApiClient apiClient = new ApiClient();
-            var users = await apiClient.GetAllEntityData<User>();
-            var AuthView = new AuthView();
-            AuthView.Show();
-            CloseAction.Invoke();
+            try
+            {
+                ApiClient apiClient = new ApiClient();
+                var users = await apiClient.GetAllEntityData<User>();
+                var AuthView = new AuthView();
+                AuthView.Show();
+                CloseAction.Invoke();
+            }
+            catch(Exception ex)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    new CustomMessageBoxView("Ошибка с соединением сервера").ShowDialog();
+                    CloseAction.Invoke();
+                });
+            }
         }
     }
 }

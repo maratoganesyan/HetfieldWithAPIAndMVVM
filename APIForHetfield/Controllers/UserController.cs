@@ -15,13 +15,13 @@ namespace APIForHetfield.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet(Name = nameof(GetAllUsers))]
         public async Task<IEnumerable<User>> GetAllUsers()
         {
             try
             {
                 var users = await Task.Run(() => DbUtils.db.Users.AsEnumerable());
-                _logger.Log(LogLevel.Information, "UsersController Get request succes");
+                _logger.Log(LogLevel.Information, $"{this.GetType().Name} Get request succes");
                 return users;
             }
             catch(Exception ex)

@@ -10,8 +10,9 @@
 
 namespace Hetfield.Properties {
     using System;
-    
-    
+    using System.Drawing;
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -57,6 +58,26 @@ namespace Hetfield.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DefaultUserPhoto {
+            get {
+                object obj = ResourceManager.GetObject("DefaultUserPhoto", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static byte[] DefaultUserPhotoInBytes
+        {
+            get
+            {
+                var photo = DefaultUserPhoto;
+                ImageConverter converter = new ImageConverter();
+                return (byte[])converter.ConvertTo(photo, typeof(byte[]));
             }
         }
         

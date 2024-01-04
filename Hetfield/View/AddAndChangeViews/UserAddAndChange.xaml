@@ -1,0 +1,223 @@
+﻿<UserControl x:Class="Hetfield.View.AddAndChangeViews.UserAddAndChange"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hetfield.View.AddAndChangeViews"
+             mc:Ignorable="d" 
+             xmlns:converter="clr-namespace:Hetfield.Tools.MVVMTools"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:modern="http://schemas.modernwpf.com/2019"
+             Height="400"
+             Width="450">
+    <UserControl.Resources>
+        <converter:PhoneNumberConverter x:Key="PhoneNumberConverter"/>
+    </UserControl.Resources>
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Top">
+            <ui:Button Icon="Circle12"
+                       IconForeground="Red"
+                       Padding="0"
+                       x:Name="CloseButton"
+                       Command="{Binding CloseCommand}"
+                       FontSize="20"
+                       IconFilled="True"
+                       BorderBrush="Transparent"
+                       Background="Transparent" />
+        </StackPanel>
+
+
+        <Grid Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Border Margin="45, 10"
+                    BorderThickness="2"
+                    CornerRadius="150"
+                    x:Name="ImageBorder">
+                <Border.BorderBrush>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#69089e"
+                                              Offset="0.8" />
+                        <GradientStop Color="#FF420265"
+                                              Offset="0" />
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
+                <Border.Background>
+                    <ImageBrush Stretch="Fill"
+                                x:Name="UserPhoto"
+                                ImageSource="{Binding TableValue.Photo}" />
+                </Border.Background>
+
+                <Button HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Content="+"
+                        Foreground="White"
+                        Background="Transparent"
+                        FontSize="30"
+                        modern:ControlHelper.CornerRadius="{Binding ElementName=ImageBorder, Path=CornerRadius}"
+                        Width="{Binding ElementName=ImageBorder, Path=ActualWidth}"
+                        Height="{Binding ElementName=ImageBorder, Path=ActualHeight}"
+                        Command="{Binding AddPhotoCommand}"/>
+            </Border>
+
+
+            <modern:SimpleStackPanel Spacing="10"
+                                     Grid.Column="1"
+                                     Margin="10 0 0 0"
+                                     VerticalAlignment="Center">
+
+                <ui:TextBox PlaceholderText="Фамилия"
+                        Icon="Person16"
+                        FontSize="16"
+                            MaxLength="50"
+                            Text="{Binding TableValue.Surname}"
+                        x:Name="SurnameTextBox"
+                        SelectionBrush="#b672db"/>
+
+                <ui:TextBox PlaceholderText="Имя"
+                        Icon="Person16"
+                            Text="{Binding TableValue.Name}"
+                        FontSize="16"
+                            MaxLength="50"
+                        x:Name="NameTextBox"
+                        SelectionBrush="#b672db"/>
+
+
+                <ui:TextBox PlaceholderText="Отчество"
+                        Icon="Person16"
+                            Text="{Binding TableValue.Patronymic}"
+                        FontSize="16"
+                            MaxLength="50"
+                        x:Name="PatronymicTextBox"
+                        SelectionBrush="#b672db"/>
+
+            </modern:SimpleStackPanel>
+
+        </Grid>
+
+        <Grid Grid.Row="2">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <modern:SimpleStackPanel VerticalAlignment="Center"
+                                     Spacing="25"
+                                     Margin="0 0 10 0">
+
+                <DatePicker x:Name="DateOfBirthPicker"
+                            FontSize="16"
+                            BorderBrush="White"
+                            Foreground="White"
+                            BorderThickness="0 0 0 1"
+                            SelectedDate="{Binding TableValue.DateOfBirth}"
+                            Background="{Binding ElementName=EmailTextBox, Path=Background}"
+                            Width="{Binding ElementName=EmailTextBox, Path=ActualWidth}"/>
+
+                <ui:TextBox PlaceholderText="Электронная почта"
+                        Icon="Mail20"
+                        FontSize="16"
+                            
+                            Text="{Binding TableValue.Email}"
+                            MaxLength="50"
+                            
+                        x:Name="EmailTextBox"
+                        SelectionBrush="#b672db"/>
+
+                <ui:TextBox PlaceholderText="+7(___)___-__-__"
+                            Icon="Phone20"
+                            FontSize="16"
+                            Text="{Binding TableValue.PhoneNumber,  
+                                    Mode=TwoWay, Converter={StaticResource PhoneNumberConverter}}"
+                            MaxLength="16"
+                            x:Name="PhoneNumberTextBox"
+                            SelectionBrush="#b672db"/>
+
+
+
+                <ComboBox x:Name="RolesComboBox"
+                          FontSize="16"
+                          BorderThickness="1"
+                          Foreground="White"
+                          Background="Transparent"
+                          modern:ControlHelper.PlaceholderText="Выберите роль"
+                          BorderBrush="White"
+                          modern:ControlHelper.PlaceholderForeground="White"
+                          ItemsSource="{Binding Roles}"
+                          SelectedValuePath="RoleName"
+                          SelectedValue="{Binding TableValue.IdRoleNavigation.RoleName}"
+                          SelectedItem="{Binding TableValue.IdRoleNavigation, Mode=TwoWay}"
+                          Width="{Binding ElementName=DateOfBirthPicker, Path=Width}">
+                </ComboBox>
+
+
+
+            </modern:SimpleStackPanel>
+
+
+            <modern:SimpleStackPanel Spacing="25"
+                                     VerticalAlignment="Center"
+                                     Grid.Column="1"
+                                     Margin="10 0 0 0">
+
+                <ui:TextBox PlaceholderText="Логин"
+                            Icon="Person16"
+                            FontSize="16"
+                            ToolTip="Логин должен содержать минимум 8 символов"
+                            x:Name="LoginTextBox"
+                            MaxLength="20"
+                            Text="{Binding TableValue.Login}"
+                            SelectionBrush="#b672db"/>
+
+                <ui:TextBox PlaceholderText="Пароль"
+                        Icon="LockOpen16"
+                        FontSize="16"
+                            Text="{Binding TableValue.Password}"
+                            MaxLength="20"
+                            ToolTip="Пароль должен содержать минимум 8 символов"
+                        x:Name="PasswordTextBox"
+                        SelectionBrush="#b672db"/>
+
+                <ComboBox x:Name="GenderComboBox"
+                          FontSize="16"
+                          Foreground="White"
+                          Background="Transparent"
+                          modern:ControlHelper.PlaceholderText="Выберите пол"
+                          modern:ControlHelper.PlaceholderForeground="White"
+                          BorderBrush="White"
+                          ItemsSource="{Binding Genders}"
+                          SelectedValuePath="GenderName"
+                          SelectedValue="{Binding TableValue.IdGenderNavigation.GenderName}"
+                          SelectedItem="{Binding TableValue.IdGenderNavigation, Mode=TwoWay}"
+                          Width="{Binding ElementName=DateOfBirthPicker, Path=Width}">
+                </ComboBox>
+
+
+                <ui:Button Content="Сохранить"
+                       FontSize="16"
+                       x:Name="SaveButton"
+                       Width="{Binding ElementName=LoginTextBox, Path=ActualWidth}"
+                       BorderBrush="White"
+                       Command="{Binding SaveChangesCommand}"
+                       BorderThickness="0.3"
+                           />
+
+            </modern:SimpleStackPanel>
+
+        </Grid>
+    </Grid>
+</UserControl>
