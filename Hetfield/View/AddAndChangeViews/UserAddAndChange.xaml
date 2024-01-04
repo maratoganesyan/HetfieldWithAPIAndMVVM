@@ -12,6 +12,7 @@
              Width="450">
     <UserControl.Resources>
         <converter:PhoneNumberConverter x:Key="PhoneNumberConverter"/>
+        <converter:EmailConverter x:Key="EmailConverter"/>
     </UserControl.Resources>
     <Grid>
 
@@ -70,7 +71,7 @@
                         modern:ControlHelper.CornerRadius="{Binding ElementName=ImageBorder, Path=CornerRadius}"
                         Width="{Binding ElementName=ImageBorder, Path=ActualWidth}"
                         Height="{Binding ElementName=ImageBorder, Path=ActualHeight}"
-                        Command="{Binding AddPhotoCommand}"/>
+                        Command="{Binding ChangeUserPhotoCommand}"/>
             </Border>
 
 
@@ -131,9 +132,9 @@
                 <ui:TextBox PlaceholderText="Электронная почта"
                         Icon="Mail20"
                         FontSize="16"
-                            
-                            Text="{Binding TableValue.Email}"
-                            MaxLength="50"
+                        Text="{Binding TableValue.Email, Mode=TwoWay,
+                                Converter={StaticResource EmailConverter}}"
+                        MaxLength="50"
                             
                         x:Name="EmailTextBox"
                         SelectionBrush="#b672db"/>

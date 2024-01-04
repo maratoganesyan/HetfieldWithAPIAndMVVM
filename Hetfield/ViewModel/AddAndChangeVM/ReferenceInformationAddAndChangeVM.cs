@@ -83,7 +83,6 @@ namespace Hetfield.ViewModel
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         new CustomMessageBoxView("Проблемы с откликом сервера. Повторите попытку позже").ShowDialog();
-                        CloseDialog();
                     });
                 }
 

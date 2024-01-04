@@ -34,7 +34,9 @@ namespace APIForHetfield.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] User user)
         {
-            Task.Run(() => DbUtils.db.Users.Add(user));
+            user.IdRoleNavigation = null;
+            user.IdGenderNavigation = null;
+            await Task.Run(() => DbUtils.db.Users.Add(user));
             await DbUtils.db.SaveChangesAsync();
             return Ok();
         }
@@ -48,7 +50,7 @@ namespace APIForHetfield.Controllers
                 user.Surname = updateuser.Surname;
                 user.Name = updateuser.Name;
                 user.Patronymic = updateuser.Patronymic;
-                user.Login = updateuser.Password;
+                user.Login = updateuser.Login;
                 user.Password = updateuser.Password;
                 user.DateOfBirth = updateuser.DateOfBirth;
                 user.PhoneNumber = updateuser.PhoneNumber;
