@@ -24,7 +24,7 @@ namespace APIForHetfield.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> ChangeCar([FromBody] Car updateCar)
+        public async Task<IActionResult> Put([FromBody] Car updateCar)
         {
             if (DbUtils.db.Cars.Any(c => c.IdCar == updateCar.IdCar))
             {

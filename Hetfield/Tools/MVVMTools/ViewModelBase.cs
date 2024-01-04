@@ -25,7 +25,10 @@ namespace Hetfield.Tools
         {
             CloseAction = closeAction;
         }
-
+        public ViewModelBase()
+        {
+            
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propertyName)
         {

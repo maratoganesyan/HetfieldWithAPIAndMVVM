@@ -2,11 +2,13 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace APIForHetfield.Models;
 
 public partial class Order
 {
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int IdOrder { get; set; }
 
     public int IdBuyer { get; set; }
@@ -28,4 +30,22 @@ public partial class Order
     public virtual OrderStatus IdOrderStatusNavigation { get; set; }
 
     public virtual User IdStaffNavigation { get; set; }
+
+    public override string ToString()
+    {
+        return IdBuyerNavigation.Surname + " " +
+               IdBuyerNavigation.Name + " " +
+               IdBuyerNavigation.Patronymic + " " +
+               IdCarNavigation.CarNumber + " " +
+               IdCarNavigation.IdCarPassportNavigation.CarModel + " " +
+               IdStaffNavigation.Surname + " " +
+               IdStaffNavigation.Name + " " +
+               IdStaffNavigation.Patronymic + " " +
+               IdCarNavigation.IdCarPassportNavigation.IdOwnerNavigation.Surname + " " +
+               IdCarNavigation.IdCarPassportNavigation.IdOwnerNavigation.Name + " " +
+               IdCarNavigation.IdCarPassportNavigation.IdOwnerNavigation.Patronymic + " " +
+               $"{DateOfOrder:d}" + " " +
+               FinalPrice + " " +
+               IdOrderStatusNavigation.OrderStatusName;
+    }
 }

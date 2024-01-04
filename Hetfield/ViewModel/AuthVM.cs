@@ -105,7 +105,18 @@ namespace Hetfield.ViewModel
         }
         private async void Auth(string? password)
         {
-            User? user = await FindUser(password);
+            User? user = null; 
+            try
+            {
+                user = await FindUser(password);
+            }
+            catch(Exception ex)
+            {
+                Application.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    new CustomMessageBoxView("Проблема с откликом сервера").ShowDialog();
+                });
+            }
             if (user != null)
             {
                 Application.Current.Dispatcher.BeginInvoke(() =>
@@ -134,18 +145,25 @@ namespace Hetfield.ViewModel
         }
         private async Task<User> FindUser(string password)
         {
-            ApiClient apiClient = new ApiClient();
-            var users = apiClient.GetAllEntityData<User>().Result;
-            if (users.Any(u => u.Login == LogInUser.Login &&
-                         u.Password == password &&
-                         (u.IdRole == AllRoles.Admin || u.IdRole == AllRoles.SalesManager || u.IdRole == AllRoles.Director)))
+            try
             {
-                User user =  users.First(u => u.Login == LogInUser.Login && u.Password == password);
-                return user;
+                ApiClient apiClient = new ApiClient();
+                var users = apiClient.GetAllEntityData<User>().Result;
+                if (users.Any(u => u.Login == LogInUser.Login &&
+                             u.Password == password &&
+                             (u.IdRole == AllRoles.Admin || u.IdRole == AllRoles.SalesManager || u.IdRole == AllRoles.Director)))
+                {
+                    User user = users.Single(u => u.Login == LogInUser.Login && u.Password == password);
+                    return user;
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else
+            catch(Exception ex)
             {
-                return null;
+                throw ex;
             }
         }
         private void GenerateCheckingDialog()

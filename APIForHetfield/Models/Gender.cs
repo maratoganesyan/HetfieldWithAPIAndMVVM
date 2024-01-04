@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
@@ -9,10 +10,13 @@ namespace APIForHetfield.Models;
 
 public partial class Gender
 {
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int IdGender { get; set; }
 
     public string GenderName { get; set; }
 
     [JsonIgnore]
     public virtual ICollection<User> Users { get; set; } = new List<User>();
+
+    public override string ToString() => GenderName;
 }

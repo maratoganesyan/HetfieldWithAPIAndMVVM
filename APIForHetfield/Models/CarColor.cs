@@ -2,12 +2,14 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace APIForHetfield.Models;
 
 public partial class CarColor
 {
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int IdCarColors { get; set; }
 
     public string ColorName { get; set; }
@@ -16,4 +18,6 @@ public partial class CarColor
 
     [JsonIgnore]
     public virtual ICollection<CarsPassport> CarsPassports { get; set; } = new List<CarsPassport>();
+
+    public override string ToString() => ColorName + " " + Hex;
 }

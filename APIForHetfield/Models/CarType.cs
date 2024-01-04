@@ -2,16 +2,20 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace APIForHetfield.Models;
 
 public partial class CarType
 {
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int IdCarType { get; set; }
 
     public string TypeName { get; set; }
 
     [JsonIgnore]
     public virtual ICollection<CarsPassport> CarsPassports { get; set; } = new List<CarsPassport>();
+
+    public override string ToString() => TypeName;
 }

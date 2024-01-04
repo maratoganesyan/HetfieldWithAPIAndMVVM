@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Hetfield.Models;
 
-public partial class Order : IDbModel
+public partial class Order : DbModelBase
 {
     public int IdOrder { get; set; }
 

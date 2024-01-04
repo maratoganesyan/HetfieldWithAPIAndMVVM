@@ -2,12 +2,14 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace APIForHetfield.Models;
 
 public partial class CarsPassport
 {
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int IdCarPassport { get; set; }
 
     public int CarManufactureYear { get; set; }

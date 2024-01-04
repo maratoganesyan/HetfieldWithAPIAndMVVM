@@ -2,16 +2,20 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace APIForHetfield.Models;
 
 public partial class OrderStatus
 {
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int IdOrderStatus { get; set; }
 
     public string OrderStatusName { get; set; }
 
     [JsonIgnore]
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+
+    public override string ToString() => OrderStatusName;
 }

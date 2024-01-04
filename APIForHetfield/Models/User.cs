@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
@@ -9,6 +10,7 @@ namespace APIForHetfield.Models;
 
 public partial class User
 {
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int IdUser { get; set; }
 
     public string Surname { get; set; }
@@ -33,12 +35,12 @@ public partial class User
 
     public int IdGender { get; set; }
 
-    [JsonIgnore]
-    public virtual ICollection<CarsPassport> CarsPassports { get; set; } = new List<CarsPassport>();
-
     public virtual Gender IdGenderNavigation { get; set; }
 
     public virtual Role IdRoleNavigation { get; set; }
+
+    [JsonIgnore]
+    public virtual ICollection<CarsPassport> CarsPassports { get; set; } = new List<CarsPassport>();
 
     [JsonIgnore]
     public virtual ICollection<Order> OrderIdBuyerNavigations { get; set; } = new List<Order>();
@@ -50,7 +52,7 @@ public partial class User
         return this.Surname + " " +
                 this.Name + " " +
                 this.Patronymic + " " +
-                $"{this.DateOfBirth:d}" + " " +
+                $"{this.DateOfBirth:dd.MM.yyyy}" + " " +
                 this.PhoneNumber + " " +
                 this.Email + " " +
                 this.Login + " " +

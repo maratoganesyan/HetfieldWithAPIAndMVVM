@@ -10,4 +10,6 @@ public partial class ManufactureYear
     public int YearValue { get; set; }
 
     public virtual ICollection<CarsPassport> CarsPassports { get; set; } = new List<CarsPassport>();
+
+    public override string ToString() => Convert.ToString(YearValue);
 }

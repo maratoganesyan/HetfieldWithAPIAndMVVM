@@ -2,12 +2,14 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace APIForHetfield.Models;
 
 public partial class Car
 {
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int IdCar { get; set; }
 
     public int IdCarPassport { get; set; }
@@ -44,4 +46,15 @@ public partial class Car
 
     [JsonIgnore]
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+
+    public override string ToString()
+    {
+        return "Mercedez-Benz " + IdCarPassportNavigation.CarModel
+                + " " + IdCarPassportNavigation.VinNumber + " " +
+                IdCarStatusNavigation.CarStatusName + " " +
+                IdCarPassportNavigation.IdOwnerNavigation.Surname + " " +
+                IdCarPassportNavigation.IdOwnerNavigation.Name + " " +
+                IdCarPassportNavigation.IdOwnerNavigation.Patronymic + " " +
+                IdCarPassportNavigation.IdOwnerNavigation.PhoneNumber;
+    }
 }
