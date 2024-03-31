@@ -56,7 +56,7 @@ namespace Hetfield.ViewModel
                 Change();
         }
 
-        private async void Add()
+        protected virtual async void Add()
         {
             ApiClient apiClient = new ApiClient();
             if(await TableValue.Validate(addMode))
@@ -83,14 +83,13 @@ namespace Hetfield.ViewModel
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         new CustomMessageBoxView("Проблемы с откликом сервера. Повторите попытку позже").ShowDialog();
-                        CloseDialog();
                     });
                 }
 
             }
         }
 
-        private async void Change()
+        protected virtual async void Change()
         {
             ApiClient apiClient = new ApiClient();
             if (await TableValue.Validate(addMode))

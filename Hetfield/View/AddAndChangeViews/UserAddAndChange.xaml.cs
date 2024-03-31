@@ -33,5 +33,11 @@ namespace Hetfield.View.AddAndChangeViews
             InitializeComponent();
             DataContext = new UsersAddAndChangeVM(user);
         }
+
+        public UserAddAndChange(bool clientMode)
+        {
+            InitializeComponent();
+            DataContext = new UsersAddAndChangeVM(clientMode);
+        }
     }
 }

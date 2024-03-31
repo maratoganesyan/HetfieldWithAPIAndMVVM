@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace Hetfield.Models;
 
@@ -44,4 +45,57 @@ public partial class Car : DbModelBase
 
     [JsonIgnore]
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+
+    public override string ToString()
+    {
+        return "Mercedez-Benz " + IdCarPassportNavigation.CarModel
+                + " " + IdCarPassportNavigation.VinNumber + " " +
+                IdCarStatusNavigation.CarStatusName + " " +
+                IdCarPassportNavigation.IdOwnerNavigation.Surname + " " +
+                IdCarPassportNavigation.IdOwnerNavigation.Name + " " +
+                IdCarPassportNavigation.IdOwnerNavigation.Patronymic + " " +
+                IdCarPassportNavigation.IdOwnerNavigation.PhoneNumber;
+    }
+
+    public override async Task<bool> Validate(bool addMode)
+    {
+        string message = string.Empty;
+        if (Price == null || Price == 0)
+            message = "Цена автомобиля не указана";
+        if(Mileage == null)
+            message = "Пробег не указан";
+        if(Description == null || Description == string.Empty)
+            message = "Введите небольшое описание для автомобиля";
+        if (CarNumber == null || CarNumber.Length < 8)
+            message = "Номер автомобиля должен состоять из самого номера и региона";
+        if(TankCapacity == null || TankCapacity == 0)
+            message = "Объем бензобака не введен";
+        if(CarPhotos.Count == 0)
+            message = "Фотографии автомобиля не добавлены";
+        if (IdCarConfigurationNavigation == null)
+            message = "Комплектация автомобиля не выбрана";
+        else
+            IdCarConfiguration = IdCarConfigurationNavigation.IdCarConfiguration;
+        if (IdCarStatusNavigation == null)
+            message = "Статус автомобиля не выбран";
+        else
+            IdCarStatus = IdCarStatusNavigation.IdCarStatus;
+        if (IdEngineNavigation == null)
+            message = "Двигатель автомобиля не выбран";
+        else
+            IdEngine = IdEngineNavigation.IdCarEngine;
+        if (IdTranssmissionNavigation == null)
+            message = "Коробка передач автомобиля не выбрана";
+        else
+            IdTranssmission = IdTranssmissionNavigation.IdTranssmission;
+        if(IdCarPassportNavigation == null)
+            message = "Данные ПТС не введены";
+        else if (!(await IdCarPassportNavigation.Validate(addMode)))
+            return false;
+        if (message != string.Empty)
+            return ValidateResult(message);
+        else
+            return true;
+
+    }
 }

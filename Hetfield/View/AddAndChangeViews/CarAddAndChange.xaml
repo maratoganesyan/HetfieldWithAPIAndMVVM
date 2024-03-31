@@ -1,0 +1,571 @@
+﻿<UserControl x:Class="Hetfield.View.AddAndChangeViews.CarAddAndChange"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hetfield.View.AddAndChangeViews"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:modern="http://schemas.modernwpf.com/2019"
+             xmlns:converter="clr-namespace:Hetfield.Tools.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="540" d:DesignWidth="1100"
+             FontSize="18"
+             Height="540"
+             Width="1100">
+    <UserControl.Resources>
+        <converter:CarModelConverter x:Key="CarModelConverter"/>
+    </UserControl.Resources>
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="20*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Top">
+            <ui:Button Icon="Circle12"
+                       IconForeground="Red"
+                       Padding="0"
+                       x:Name="CloseButton"
+                       Command="{Binding CloseCommand}"
+                       FontSize="20"
+                       IconFilled="True"
+                       BorderBrush="Transparent"
+                       Background="Transparent" />
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+
+                <Grid>
+                    <Border BorderBrush="White"
+                            BorderThickness="1"
+                            Margin="10"
+                            CornerRadius="10">
+                        <Grid>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="4*"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid HorizontalAlignment="Center">
+                                <ui:Button Icon="Add16"
+                                           Content="Добавить Фотографию"
+                                           x:Name="AddPhotoButton"
+                                           Command="{Binding AddPhotoCommand}"
+                                           FontSize="18"
+                                           BorderBrush="White"
+                                           BorderThickness="1" />
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+
+                                <Border BorderThickness="0 1 0 0"
+                                        BorderBrush="White">
+                                    <ui:DynamicScrollViewer Margin="7"
+                                                            x:Name="PhotosScrollView">
+                                        <ItemsControl ItemsSource="{Binding CarPhotos}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border BorderThickness="2"
+                                                            BorderBrush="White"
+                                                            Margin="10">
+                                                        <Button x:Name="carPhotoButton"
+                                                                Padding="-10"
+                                                                MaxHeight="{Binding ElementName=PhotosScrollView, Path=ActualHeight}"
+                                                                Command="{Binding DataContext.ChangePhotoCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ScrollViewer}}}"
+                                                                CommandParameter="{Binding IdPhoto}"
+                                                                HorizontalContentAlignment="Center"
+                                                                HorizontalAlignment="Center"
+                                                                >
+                                                            <Button.Content>
+                                                                <Image Source="{Binding Photo}"
+                                                                       HorizontalAlignment="Center"/>
+                                                            </Button.Content>
+                                                        </Button>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ui:DynamicScrollViewer>
+                                </Border>
+                            </Grid>
+
+                        </Grid>
+
+                    </Border>
+                </Grid>
+
+                <RichTextBox x:Name="DescriptionTextBox"
+                             BorderBrush="White"
+                             Grid.Row="1"
+                             FontSize="17"
+                             Foreground="White"
+                             modern:ControlHelper.CornerRadius="15"
+                             modern:ControlHelper.PlaceholderForeground="White"
+                             Background="Transparent"
+                             
+                             Margin="10">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="{Binding TableValue.Description}"/>
+                        </Paragraph>
+                    </FlowDocument>
+                    <modern:ControlHelper.Header>
+                        <TextBlock FontSize="18"
+                                   HorizontalAlignment="Center"
+                                   Foreground="White"
+                                   Text="Описание автомобиля"/>
+                    </modern:ControlHelper.Header>
+                </RichTextBox>
+            </Grid>
+
+
+            <Border Grid.Column="1"
+                    BorderThickness="1"
+                    BorderBrush="White"
+                    CornerRadius="20"
+                    Margin="10">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="8*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border BorderBrush="White"
+                                BorderThickness="0 0 0 1">
+                            <TextBlock Text="Данные для ввода" 
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   Margin="0 5 0 0"
+                                   Grid.ColumnSpan="2"/>
+                        </Border>
+
+                        <Grid x:Name="PTSGrid"
+                              Grid.Row="1"
+                              Visibility="Visible">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <modern:SimpleStackPanel Spacing="10"
+                                                     Margin="10"
+                                                     Orientation="Vertical">
+                                <modern:SimpleStackPanel Spacing="3">
+                                    <TextBlock Text="Модель" 
+                                               Foreground="White" 
+                                               FontSize="17"/>
+
+                                    <ui:TextBox x:Name="ModelTextBox" 
+                                                PlaceholderText="Введите модель"
+                                                MaxLength="50"
+                                                Text="{Binding TableValue.IdCarPassportNavigation.CarModel,
+                                                        Converter={StaticResource CarModelConverter}, Mode=TwoWay}"
+                                                FontSize="17"/>
+                                </modern:SimpleStackPanel>
+
+                                <modern:SimpleStackPanel Spacing="3">
+                                    <TextBlock Text="Vin-номер" 
+                                               Foreground="White" 
+                                               FontSize="17"/>
+
+                                    <ui:TextBox x:Name="VinTextBox" 
+                                                PlaceholderText="Введите Vin"
+                                                MaxLength="17"
+                                                Text="{Binding TableValue.IdCarPassportNavigation.VinNumber}"
+                                                FontSize="17"/>
+                                </modern:SimpleStackPanel>
+
+                                <modern:SimpleStackPanel Spacing="3">
+                                    <TextBlock Text="Мощность двигателя (л.с.)" 
+                                               Foreground="White" 
+                                               FontSize="17"/>
+
+                                    <ui:NumberBox x:Name="CarPowerTextBox"
+                                                  IntegersOnly="True"
+                                                  SpinButtonsEnabled="False"
+                                                  Value="{Binding TableValue.IdCarPassportNavigation.CarPower, Mode=TwoWay}"
+                                                  FontSize="17"/>
+                                </modern:SimpleStackPanel>
+
+                                <modern:SimpleStackPanel Spacing="3">
+                                    <TextBlock Text="Объем двигателя (куб. см)" 
+                                               Foreground="White" 
+                                               FontSize="17"/>
+
+                                    <ui:NumberBox x:Name="EngineDisplacmentTextBox"
+                                                  SpinButtonsEnabled="False"
+                                                  IntegersOnly="True"
+                                                  Value="{Binding TableValue.IdCarPassportNavigation.EngineDisplacement, Mode=TwoWay}"
+                                                  FontSize="17"/>
+                                </modern:SimpleStackPanel>
+
+                                <modern:SimpleStackPanel Spacing="3">
+                                    <TextBlock Text="Серия и номер ПТС" 
+                                               Foreground="White" 
+                                               FontSize="17"/>
+
+                                    <ui:TextBox x:Name="CarPassportSeriasAndNumberTextBox" 
+                                                PlaceholderText="Введите серию и номер ПТС"
+                                                Text="{Binding TableValue.IdCarPassportNavigation.PassportSeriasAndNumber}"
+                                                MaxLength="12"
+                                                FontSize="17"/>
+                                </modern:SimpleStackPanel>
+
+                            </modern:SimpleStackPanel>
+
+                            <modern:SimpleStackPanel Spacing="10"
+                                                     Margin="10"
+                                                     Grid.Column="1"
+                                                     Orientation="Vertical">
+                                <modern:SimpleStackPanel Spacing="3">
+                                    <TextBlock Text="Дата выдачи ПТС" 
+                                               Foreground="White" 
+                                               FontSize="17"/>
+
+                                    <DatePicker Foreground="White"
+                                                x:Name="PTSDateOfIssue"
+                                                Background="{Binding ElementName=ModelTextBox, Path=Background}"
+                                                BorderBrush="White"
+                                                BorderThickness="0 0 0 1"
+                                                HorizontalAlignment="Stretch"
+                                                SelectedDate="{Binding TableValue.IdCarPassportNavigation.DateOfIssue}"
+                                                SelectedDateFormat="Short"
+                                                TextBlock.FontSize="17"/>
+
+
+                                </modern:SimpleStackPanel>
+
+                                <modern:SimpleStackPanel Spacing="3">
+                                    <TextBlock Text="Год производства ТС" 
+                                               Foreground="White" 
+                                               FontSize="17"/>
+
+                                    <ComboBox x:Name="YearsComboBox"
+                                              Foreground="White"
+                                              FontSize="17"
+                                              BorderBrush="White"
+                                              ItemsSource="{Binding Years}"
+                                              SelectedValuePath="YearValue"
+                                              SelectedValue="{Binding TableValue.IdCarPassportNavigation.CarManufactureYearNavigation.YearValue}"
+                                              SelectedItem="{Binding TableValue.IdCarPassportNavigation.CarManufactureYearNavigation, Mode=TwoWay}"
+                                              BorderThickness="0 0 0 1"
+                                              HorizontalAlignment="Stretch"
+                                              Background="{Binding ElementName=ModelTextBox, Path=Background}"/>
+
+                                </modern:SimpleStackPanel>
+
+                                <modern:SimpleStackPanel Spacing="3">
+                                    <TextBlock Text="Цвет автомобиля" 
+                                               Foreground="White" 
+                                               FontSize="17"/>
+                                    <ComboBox x:Name="ColorsComboBox"
+                                              Foreground="White"
+                                              BorderBrush="White"
+                                              FontSize="17"
+                                              BorderThickness="0 0 0 1"
+                                              ItemsSource="{Binding Colors}"
+                                              SelectedValuePath="ColorName"
+                                              SelectedValue="{Binding TableValue.IdCarPassportNavigation.IdCarColorNavigation.ColorName}"
+                                              SelectedItem="{Binding TableValue.IdCarPassportNavigation.IdCarColorNavigation, Mode=TwoWay}"
+                                              HorizontalAlignment="Stretch"
+                                              Background="{Binding ElementName=ModelTextBox, Path=Background}">
+
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <modern:SimpleStackPanel Orientation="Horizontal"
+                                                                         Spacing="10">
+                                                    <Ellipse Fill="{Binding Hex}"
+                                                             Width="25"
+                                                             Height="25"
+                                                             Stroke="Black"/>
+                                                    <TextBlock Foreground="White"
+                                                               Text="{Binding ColorName}"/>
+
+                                                </modern:SimpleStackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+
+                                    </ComboBox>
+
+                                </modern:SimpleStackPanel>
+
+                                <modern:SimpleStackPanel Spacing="3">
+                                    <TextBlock Text="Тип автомобиля" 
+                                               Foreground="White" 
+                                               FontSize="17"/>
+
+                                    <ComboBox x:Name="CarTypeComboBox"
+                                              Foreground="White"
+                                              BorderBrush="White"
+                                              FontSize="17"
+                                              ItemsSource="{Binding Types}"
+                                              SelectedValuePath="TypeName"
+                                              SelectedValue="{Binding TableValue.IdCarPassportNavigation.IdCarTypeNavigation.TypeName}"
+                                              SelectedItem="{Binding TableValue.IdCarPassportNavigation.IdCarTypeNavigation, Mode=TwoWay}"
+                                              BorderThickness="0 0 0 1"
+                                              HorizontalAlignment="Stretch"
+                                              Background="{Binding ElementName=ModelTextBox, Path=Background}"/>
+
+
+                                </modern:SimpleStackPanel>
+
+                                <modern:SimpleStackPanel Spacing="3">
+                                    <TextBlock Text="Владелец ТС" 
+                                               Foreground="White" 
+                                               FontSize="17"/>
+
+                                    <ComboBox x:Name="OwnerComboBox"
+                                              Foreground="White"
+                                              BorderBrush="White"
+                                              FontSize="17"
+                                              ItemsSource="{Binding Owners}"
+                                              SelectedValuePath="IdUser"
+                                              SelectedValue="{Binding TableValue.IdCarPassportNavigation.IdOwnerNavigation.IdUser}"
+                                              SelectedItem="{Binding TableValue.IdCarPassportNavigation.IdOwnerNavigation, Mode=TwoWay}"
+                                              BorderThickness="0 0 0 1"
+                                              HorizontalAlignment="Stretch"
+                                              Background="{Binding ElementName=ModelTextBox, Path=Background}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Foreground="White">
+                                                    <Run Text="{Binding Surname}" />
+                                                    <Run Text="{Binding Name}" />
+                                                    <Run Text="{Binding PhoneNumber}" />
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+
+                                </modern:SimpleStackPanel>
+
+                            </modern:SimpleStackPanel>
+
+
+                        </Grid>
+                        <!--ПТС-->
+
+                        <Grid Grid.Row="1"
+                              x:Name="CarAboutGrid"
+                              Visibility="Collapsed">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <modern:SimpleStackPanel Spacing="20"
+                                                     Margin="10"
+                                                     Orientation="Vertical">
+
+                                <modern:SimpleStackPanel Spacing="3">
+
+                                    <TextBlock Text="Цена (₽)" 
+                                               Foreground="White" 
+                                               FontSize="17"/>
+
+                                    <ui:NumberBox x:Name="PriceTextBox"
+                                                  IntegersOnly="True"
+                                                  Value="{Binding TableValue.Price, Mode=TwoWay}"
+                                                  SpinButtonsEnabled="False"
+                                                    PlaceholderText="0"
+                                                    FontSize="17"/>
+
+                                </modern:SimpleStackPanel>
+
+                                <modern:SimpleStackPanel Spacing="3">
+
+                                    <TextBlock Text="Пробег (км)" 
+                                               Foreground="White" 
+                                               FontSize="17"/>
+
+                                    <ui:NumberBox x:Name="MileageTextBox"
+                                                  Value="{Binding TableValue.Mileage, Mode=TwoWay}"
+                                                      IntegersOnly="True"
+                                                      SpinButtonsEnabled="False"
+                                                      FontSize="17"/>
+
+                                </modern:SimpleStackPanel>
+
+                                <modern:SimpleStackPanel Spacing="3">
+
+                                    <TextBlock Text="Объем бензобака (л)" 
+                                               Foreground="White" 
+                                               FontSize="17"/>
+
+                                    <ui:NumberBox x:Name="TankCapacityTextBox"
+                                                      IntegersOnly="True"
+                                                  Value="{Binding TableValue.TankCapacity, Mode=TwoWay}"
+                                                      SpinButtonsEnabled="False"
+                                                      Min="0"
+                                                      Max="1000"
+                                                      FontSize="17"/>
+
+                                </modern:SimpleStackPanel>
+
+                                <modern:SimpleStackPanel Spacing="3">
+
+                                    <TextBlock Text="Гос. номер автомобиля" 
+                                               Foreground="White" 
+                                               FontSize="17"/>
+
+                                    <ui:TextBox x:Name="CarNumberTextBox"
+                                                Text="{Binding TableValue.CarNumber}"
+                                                    PlaceholderText="Введите номер"
+                                                    MaxLength="9"
+                                                    FontSize="17"/>
+
+                                </modern:SimpleStackPanel>
+
+
+
+                            </modern:SimpleStackPanel>
+
+                            <modern:SimpleStackPanel Orientation="Vertical"
+                                                         Margin="10"
+                                                         Grid.Column="1"
+                                                         Spacing="20">
+
+                                <modern:SimpleStackPanel Spacing="3">
+                                    <TextBlock Text="Комплектация ТС" 
+                                               Foreground="White" 
+                                               FontSize="17"/>
+
+                                    <ComboBox x:Name="CarConfigurationComboBox"
+                                              Foreground="White"
+                                              FontSize="17"
+                                              BorderBrush="White"
+                                              BorderThickness="0 0 0 1"
+                                              HorizontalAlignment="Stretch"
+                                              ItemsSource="{Binding Configurations}"
+                                              SelectedValuePath="IdCarConfiguration"
+                                              SelectedValue="{Binding TableValue.IdCarConfigurationNavigation.IdCarConfiguration}"
+                                              SelectedItem="{Binding TableValue.IdCarConfigurationNavigation, Mode=TwoWay}"
+                                              Background="{Binding ElementName=ModelTextBox, Path=Background}"/>
+
+                                </modern:SimpleStackPanel>
+
+                                <modern:SimpleStackPanel Spacing="3">
+                                    <TextBlock Text="Двигатель" 
+                                               Foreground="White" 
+                                               FontSize="17"/>
+                                    <ComboBox x:Name="CarEngineComboBox"
+                                              Foreground="White"
+                                              BorderBrush="White"
+                                              FontSize="17"
+                                              BorderThickness="0 0 0 1"
+                                              HorizontalAlignment="Stretch"
+                                              ItemsSource="{Binding Engines}"
+                                              SelectedValuePath="IdCarEngine"
+                                              SelectedValue="{Binding TableValue.IdEngineNavigation.IdCarEngine}"
+                                              SelectedItem="{Binding TableValue.IdEngineNavigation, Mode=TwoWay}"
+                                              Background="{Binding ElementName=ModelTextBox, Path=Background}"/>
+
+                                </modern:SimpleStackPanel>
+
+                                <modern:SimpleStackPanel Spacing="3">
+                                    <TextBlock Text="Коробка передач" 
+                                               Foreground="White" 
+                                               FontSize="17"/>
+
+                                    <ComboBox x:Name="CarTranssmissionComboBox"
+                                              Foreground="White"
+                                              BorderBrush="White"
+                                              FontSize="17"
+                                              BorderThickness="0 0 0 1"
+                                              ItemsSource="{Binding Transsmissions}"
+                                              SelectedValuePath="IdTranssmission"
+                                              SelectedValue="{Binding TableValue.IdTranssmissionNavigation.IdTranssmission}"
+                                              SelectedItem="{Binding TableValue.IdTranssmissionNavigation, Mode=TwoWay}"
+                                              HorizontalAlignment="Stretch"
+                                              Background="{Binding ElementName=ModelTextBox, Path=Background}"/>
+
+                                </modern:SimpleStackPanel>
+
+                                <modern:SimpleStackPanel Spacing="3">
+                                    <TextBlock Text="Статус" 
+                                               Foreground="White" 
+                                               FontSize="17"/>
+
+                                    <ComboBox x:Name="CarStatusComboBox"
+                                              Foreground="White"
+                                              BorderBrush="White"
+                                              FontSize="17"
+                                              BorderThickness="0 0 0 1"
+                                              ItemsSource="{Binding Statuses}"
+                                              SelectedValuePath="IdCarStatus"
+                                              SelectedValue="{Binding TableValue.IdCarStatusNavigation.IdCarStatus}"
+                                              SelectedItem="{Binding TableValue.IdCarStatusNavigation, Mode=TwoWay}"
+                                              HorizontalAlignment="Stretch"
+                                              Background="{Binding ElementName=ModelTextBox, Path=Background}"/>
+
+                                </modern:SimpleStackPanel>
+
+                            </modern:SimpleStackPanel>
+
+                        </Grid>
+                        <!--Информация о автомобиле-->
+
+
+
+
+                    </Grid>
+
+
+                    <Border Grid.Row="1"
+                            BorderBrush="White"
+                            BorderThickness="0 1 0 0">
+                        <Grid HorizontalAlignment="Stretch"
+                              Margin="10">
+
+                            <ui:Button Icon="ArrowCircleLeft24"
+                                       x:Name="LeftPageSwapButton"
+                                       Click="LeftPageSwapButton_Click"
+                                       FontSize="35"/>
+
+                            <ui:Button Content="Сохранить"
+                                       HorizontalAlignment="Center"
+                                       x:Name="SaveCarButton"
+                                       Command="{Binding SaveChangesCommand}"
+                                       BorderBrush="White"
+                                       BorderThickness="0.5"
+                                       FontSize="20"
+                                       Width="180"/>
+
+                            <ui:Button Icon="ArrowCircleRight24"
+                                   x:Name="RightPageSwapButton"
+                                   HorizontalAlignment="Right"
+                                       Click="RightPageSwapButton_Click"
+                                   FontSize="35"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
               xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:modern="http://schemas.modernwpf.com/2019"
-        Height="450"
+        Height="400"
         Width="320"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              Background="Transparent">
@@ -35,6 +35,7 @@
                     Grid.Row="1"
                                  Spacing="20"
                     x:Name="MainPanel"
+            Margin="10 0"
                     VerticalAlignment="Top">
             <StackPanel HorizontalAlignment="Center"
                         Margin="0 0 0 20">

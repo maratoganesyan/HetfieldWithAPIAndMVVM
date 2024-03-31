@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using Hetfield.Models;
 using System.Net;
+using Newtonsoft.Json;
 
 namespace APIForHetfield;
 
@@ -26,6 +27,21 @@ class ApiClient
         IsHttpClientCreated = true;
     }
 
+    public async Task<TEntity> GetSingleEntityData<TEntity>() where TEntity : DbModelBase
+    {
+        string request = baseUrl + "/" + typeof(TEntity).Name;
+        var response = await _httpClient.GetAsync(request);
+        if (response.IsSuccessStatusCode)
+        {
+            var data = await response.Content.ReadAsStringAsync();
+            return (TEntity)Newtonsoft.Json.JsonConvert.DeserializeObject(data, typeof(TEntity));
+        }
+        else
+        {
+            throw new Exception($"Ошибка: {response.StatusCode}");
+        }
+    }
+
     public async Task<IEnumerable<TEntity>> GetAllEntityData<TEntity>() where TEntity : DbModelBase
     {
         string request = baseUrl + "/" + typeof(TEntity).Name;
@@ -33,7 +49,7 @@ class ApiClient
         if (response.IsSuccessStatusCode)
         {
             var data = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<IEnumerable<TEntity>>(data);
+            return System.Text.Json.JsonSerializer.Deserialize<IEnumerable<TEntity>>(data);
         }
         else
         {
@@ -48,7 +64,7 @@ class ApiClient
         if (response.IsSuccessStatusCode)
         {
             var data = await response.Content.ReadAsStringAsync();
-            var ConvertedData = JsonSerializer.Deserialize<IEnumerable<TEntity>>(data);
+            var ConvertedData = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<TEntity>>(data);
             return ConvertedData.Where(m => m.ToString().Contains(searchText));
         }
         else
@@ -59,7 +75,7 @@ class ApiClient
 
     public async Task<bool> AddEntityDataAsync<TEntity>(TEntity entityData) where TEntity : DbModelBase
     {
-        var entityDataInJsonFormat = JsonSerializer.Serialize(entityData);
+        var entityDataInJsonFormat = System.Text.Json.JsonSerializer.Serialize(entityData);
         var content = new StringContent(entityDataInJsonFormat, Encoding.UTF8, "application/json");
         var response = await _httpClient.PostAsync(baseUrl + "/" + typeof(TEntity).Name, content);
 

@@ -9,6 +9,7 @@
         xmlns:props="clr-namespace:Hetfield.Tools"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:modern="http://schemas.modernwpf.com/2019"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -20,6 +21,10 @@
         Height="850"
         Width="1400"
         props:ViewModelProperties.LoadedCommand="{Binding LoadCommand}">
+    <Window.Resources>
+        <sys:Double x:Key="ContentDialogMaxWidth">1500</sys:Double>
+        <Thickness x:Key="ContentDialogPadding">2 -10 2 10</Thickness>
+    </Window.Resources>
     <Window.Background>
         <LinearGradientBrush>
             <GradientStop Color="#b672db"
@@ -131,6 +136,8 @@
                                  Foreground="White"
                                  x:Name="CarsMI"
                                  Tag="11"
+                                 Command="{Binding OpenPageCommand}"
+                                 CommandParameter="{x:Type MyPages:CarPage}"
                                  SymbolIconFilled="True"
                                  Width="{Binding ElementName=MainMenu, Path=ActualWidth}"
                                  Header="Автомобили" />
@@ -151,6 +158,8 @@
                                  FontSize="{Binding ElementName=ThisWindow, Path=FontSize}"
                                  Foreground="White"
                                  x:Name="OrdersMI"
+                                 Command="{Binding OpenPageCommand}"
+                                 CommandParameter="{x:Type MyPages:OrderPage}"
                                  Tag="13"
                                  SymbolIconFilled="True"
                                  Width="{Binding ElementName=MainMenu, Path=ActualWidth}"
@@ -169,6 +178,8 @@
                     <ui:MenuItem SymbolIcon="ChartMultiple20"
                                  VerticalContentAlignment="Center"
                                  FontSize="{Binding ElementName=ThisWindow, Path=FontSize}"
+                                 Command="{Binding OpenPageCommand}"
+                                 CommandParameter="{x:Type MyPages:ChartsPage}"
                                  Foreground="White"
                                  x:Name="ChartMI"
                                  Tag="15"
@@ -180,10 +191,12 @@
                                  FontSize="{Binding ElementName=ThisWindow, Path=FontSize}"
                                  Foreground="White"
                                  x:Name="DocumentsMI"
+                                 Command="{Binding OpenPageCommand}"
+                                 CommandParameter="{x:Type MyPages:ReportPage}"
                                  Tag="16"
                                  SymbolIconFilled="True"
                                  Width="{Binding ElementName=MainMenu, Path=ActualWidth}"
-                                 Header="Документы" />
+                                 Header="Отчёты" />
                 </Menu>
 
             </Border>
@@ -323,10 +336,17 @@
         </Grid>
         <modern:ContentDialog Grid.RowSpan="2"
                               Grid.ColumnSpan="2"
-                              Visibility="Hidden"
                               x:Name="DialogForAddAndChangePages"
                               BorderBrush="White"
-                              BorderThickness="3">
+                              BorderThickness="3"
+                              Visibility="Hidden"
+                              HorizontalContentAlignment="Stretch"
+                              MaxWidth="{modern:StaticResource ContentDialogMaxWidth}"
+                              Padding="{modern:StaticResource ContentDialogPadding}">
+            
+            <modern:ContentDialog.Resources>
+                
+            </modern:ContentDialog.Resources>
             <modern:ContentDialog.Background>
                 <LinearGradientBrush>
                     <GradientStop Color="#69089e"

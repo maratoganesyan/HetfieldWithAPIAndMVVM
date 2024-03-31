@@ -5,13 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Hetfield.View.AddAndChangeViews"
              mc:Ignorable="d" 
-             xmlns:converter="clr-namespace:Hetfield.Tools.MVVMTools"
+             xmlns:converter="clr-namespace:Hetfield.Tools.Converters"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:modern="http://schemas.modernwpf.com/2019"
-             Height="400"
-             Width="450">
+             Height="450"
+             Width="520">
     <UserControl.Resources>
         <converter:PhoneNumberConverter x:Key="PhoneNumberConverter"/>
+        <converter:EmailConverter x:Key="EmailConverter"/>
     </UserControl.Resources>
     <Grid>
 
@@ -43,7 +44,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Border Margin="45, 10"
+            <Border Margin="45, 0"
                     BorderThickness="2"
                     CornerRadius="150"
                     x:Name="ImageBorder">
@@ -70,13 +71,13 @@
                         modern:ControlHelper.CornerRadius="{Binding ElementName=ImageBorder, Path=CornerRadius}"
                         Width="{Binding ElementName=ImageBorder, Path=ActualWidth}"
                         Height="{Binding ElementName=ImageBorder, Path=ActualHeight}"
-                        Command="{Binding AddPhotoCommand}"/>
+                        Command="{Binding ChangeUserPhotoCommand}"/>
             </Border>
 
 
             <modern:SimpleStackPanel Spacing="10"
                                      Grid.Column="1"
-                                     Margin="10 0 0 0"
+                                     Margin="10 0"
                                      VerticalAlignment="Center">
 
                 <ui:TextBox PlaceholderText="Фамилия"
@@ -117,7 +118,7 @@
 
             <modern:SimpleStackPanel VerticalAlignment="Center"
                                      Spacing="25"
-                                     Margin="0 0 10 0">
+                                     Margin="10 0">
 
                 <DatePicker x:Name="DateOfBirthPicker"
                             FontSize="16"
@@ -131,9 +132,9 @@
                 <ui:TextBox PlaceholderText="Электронная почта"
                         Icon="Mail20"
                         FontSize="16"
-                            
-                            Text="{Binding TableValue.Email}"
-                            MaxLength="50"
+                        Text="{Binding TableValue.Email, Mode=TwoWay,
+                                Converter={StaticResource EmailConverter}}"
+                        MaxLength="50"
                             
                         x:Name="EmailTextBox"
                         SelectionBrush="#b672db"/>
@@ -156,6 +157,7 @@
                           Background="Transparent"
                           modern:ControlHelper.PlaceholderText="Выберите роль"
                           BorderBrush="White"
+                          IsEnabled="{Binding IsRoleChangeEnabled}"
                           modern:ControlHelper.PlaceholderForeground="White"
                           ItemsSource="{Binding Roles}"
                           SelectedValuePath="RoleName"
@@ -172,10 +174,11 @@
             <modern:SimpleStackPanel Spacing="25"
                                      VerticalAlignment="Center"
                                      Grid.Column="1"
-                                     Margin="10 0 0 0">
+                                     Margin="10 0">
 
                 <ui:TextBox PlaceholderText="Логин"
                             Icon="Person16"
+                            IconFilled="True"
                             FontSize="16"
                             ToolTip="Логин должен содержать минимум 8 символов"
                             x:Name="LoginTextBox"
@@ -186,6 +189,7 @@
                 <ui:TextBox PlaceholderText="Пароль"
                         Icon="LockOpen16"
                         FontSize="16"
+                            
                             Text="{Binding TableValue.Password}"
                             MaxLength="20"
                             ToolTip="Пароль должен содержать минимум 8 символов"

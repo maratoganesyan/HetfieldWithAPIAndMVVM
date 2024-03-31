@@ -54,15 +54,15 @@ public partial class User : DbModelBase
     public override async Task<bool> Validate(bool addMode)
     {
         string message = string.Empty;
-        if (Surname.Length == 0)
+        if (Surname == null || Surname == string.Empty)
         {
             message = "Поле фамилии не заполнено";
         }
-        if (Name.Length == 0)
+        if (Name == null || Surname == string.Empty)
         {
             message = "Поле имени не заполнено";
         }
-        if (Patronymic.Length == 0)
+        if (Patronymic == null || Surname == string.Empty)
         {
             message = "Поле отчества не заполнено";
         }
@@ -70,18 +70,22 @@ public partial class User : DbModelBase
         {
             message = "В поле даты рождения введена невалидная информация. Проверьте дату рождения";
         }
-        if (Email.Length == 0)
+        if (Email == null || Surname == string.Empty)
         {
             message = "Поле электронной почты не заполнено";
         }
-        if (PhoneNumber.Length == 0)
+        if (PhoneNumber == null || Surname == string.Empty)
         {
             message = "Поле Номера телефона не заполнено";
         }
+        if (Login == null)
+            Login = string.Empty;
         if (Login.Length < 8)
         {
             message = "Поле логина должно иметь минимум 8 значений";
         }
+        if (Password == null)
+            Password = string.Empty;
         if (Password.Length < 8)
         {
             message = "Поле пароля должно иметь минимум 8 значений";
@@ -111,6 +115,17 @@ public partial class User : DbModelBase
         if (users.Any(u => u.PhoneNumber == PhoneNumber) && addMode)
         {
             message = "Пользователь с таким номером телефона уже есть в базе. Убедитесь в корректности ввода";
+        }
+        if(!addMode)
+        {
+            if (users.Any(u => u.Login == Login && u.IdUser != IdUser))
+            {
+                message = "Пользователь с таким логином уже есть в базе. Придумайте другой логин";
+            }
+            if (users.Any(u => u.PhoneNumber == PhoneNumber && u.IdUser != IdUser))
+            {
+                message = "Пользователь с таким номером телефона уже есть в базе. Убедитесь в корректности ввода";
+            }
         }
         if (message != string.Empty)
         {
