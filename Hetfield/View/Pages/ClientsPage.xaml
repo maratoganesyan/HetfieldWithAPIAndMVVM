@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Hetfield.View.Pages"
       mc:Ignorable="d" 
-       xmlns:props="clr-namespace:Hetfield.Tools"
+      xmlns:props="clr-namespace:Hetfield.Tools"
       xmlns:converter="clr-namespace:Hetfield.Tools.MVVMTools"
       xmlns:addAndChangePages="clr-namespace:Hetfield.View.AddAndChangeViews"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
@@ -59,6 +59,7 @@
                        Content="Добавить"
                        x:Name="AddButton"
                        Command="{Binding OpenAddDialogCommand}"
+                       CommandParameter="{x:Type addAndChangePages:UserAddAndChange}"
                        FontSize="18"
                        BorderBrush="White"
                        BorderThickness="1" />
@@ -76,6 +77,7 @@
                      CanUserReorderColumns="False"
                      CanUserResizeColumns="False"
                      HorizontalScrollBarVisibility="Auto"
+                     RowDetailsVisibilityMode="Collapsed"
                      FontSize="18"
                      ItemsSource="{Binding TableValue}">
             <ui:DataGrid.Columns>
@@ -95,7 +97,7 @@
                                 <ui:Button.CommandParameter>
                                     <MultiBinding Converter="{StaticResource MultiBindingConverter}">
                                         <Binding RelativeSource="{RelativeSource Self}"/>
-                                        <Binding Source="{x:Type addAndChangePages:CarConfigurationAddAndChange}"/>
+                                        <Binding Source="{x:Type addAndChangePages:UserAddAndChange}"/>
                                     </MultiBinding>
                                 </ui:Button.CommandParameter>
                             </ui:Button>
@@ -171,18 +173,15 @@
                                         ImageSource="{Binding Photo}" />
                             </Border.Background>
                         </Border>
-                        <ui:Button Foreground="White"
-                                   BorderBrush="White"
-                                   BorderThickness="0.4"
-                                   FontSize="18"
-                                   x:Name="HideUserPhoto"
-                                   Content="Скрыть" 
-                                   Click="HideUserPhoto_Click"
-                                   Icon="ArrowUp24"
-                                   IconFilled="True"/>
                     </modern:SimpleStackPanel>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
+
+            <ui:DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
+                </Style>
+            </ui:DataGrid.RowStyle>
         </ui:DataGrid>
     </Grid>
 </Page>

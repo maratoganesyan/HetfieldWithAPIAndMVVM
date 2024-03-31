@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Hetfield.Models;
 
@@ -28,4 +29,50 @@ public partial class Order : DbModelBase
     public virtual OrderStatus IdOrderStatusNavigation { get; set; }
 
     public virtual User IdStaffNavigation { get; set; }
+
+    public override async Task<bool> Validate(bool addMode)
+    {
+        string message = string.Empty;
+        if (FinalPrice == null || FinalPrice == 0 || FinalPrice > 9999999.99m)
+            message = "Цена автомобиля не указана или указана неверна(максимальная цена автомобиля не может превышать 99млн)";
+        if (DateOfOrder == null)
+            message = "Дата не выбрана";
+        if (IdBuyerNavigation == null)
+            message = "Покупатель не выбран";
+        else
+            IdBuyer = IdBuyerNavigation.IdUser;
+        if (IdCarNavigation == null)
+            message = "Автмобиль не выбран";
+        else
+            IdCar = IdCarNavigation.IdCar;
+        if (IdOrderStatusNavigation == null)
+            message = "Статус заказа не выбран";
+        else
+            IdOrderStatus = IdOrderStatusNavigation.IdOrderStatus;
+        if (IdStaffNavigation == null)
+            message = "Работник, занимающийся заказом не выбран";
+        else
+            IdStaff = IdStaffNavigation.IdUser;
+        if (message != string.Empty)
+            return ValidateResult(message);
+        else
+            return true;
+    }
+    public override string ToString()
+    {
+        return IdBuyerNavigation.Surname + " " +
+               IdBuyerNavigation.Name + " " +
+               IdBuyerNavigation.Patronymic + " " +
+               IdCarNavigation.CarNumber + " " +
+               IdCarNavigation.IdCarPassportNavigation.CarModel + " " +
+               IdStaffNavigation.Surname + " " +
+               IdStaffNavigation.Name + " " +
+               IdStaffNavigation.Patronymic + " " +
+               IdCarNavigation.IdCarPassportNavigation.IdOwnerNavigation.Surname + " " +
+               IdCarNavigation.IdCarPassportNavigation.IdOwnerNavigation.Name + " " +
+               IdCarNavigation.IdCarPassportNavigation.IdOwnerNavigation.Patronymic + " " +
+               $"{DateOfOrder:d}" + " " +
+               FinalPrice + " " +
+               IdOrderStatusNavigation.OrderStatusName;
+    }
 }

@@ -20,7 +20,7 @@ builder.Services.AddMvc().AddJsonOptions(
         option.JsonSerializerOptions.PropertyNamingPolicy = null;
         option.JsonSerializerOptions.WriteIndented = true;
     }
-                                    
+
     );
 var app = builder.Build();
 // Configure the HTTP request pipeline.

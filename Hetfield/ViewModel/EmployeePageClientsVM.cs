@@ -1,6 +1,7 @@
 ﻿using APIForHetfield;
 using Hetfield.Models;
 using Hetfield.Tools.DbUtils;
+using Hetfield.Tools.MVVMTools;
 using Hetfield.View;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using Hetfield.View.AddAndChangeViews;
+using System.Reflection;
 
 namespace Hetfield.ViewModel
 {
@@ -56,6 +60,36 @@ namespace Hetfield.ViewModel
                     new CustomMessageBoxView("Ошибка запроса на сервер").ShowDialog();
                 });
             }
+        }
+
+        protected override void OpenAddDialog(object parameter)
+        {
+            ContentDialogService.userControlInDialog = new UserAddAndChange(true);
+            ContentDialogService service = new ContentDialogService();
+            service.OpenDialog();
+        }
+
+        protected override void OpenChangeDialog(object parameter)
+        {
+            if (parameter is object[] parameters && parameters.Length == 2)
+            {
+                if (parameters[1] is Type userControlType && typeof(UserControl).IsAssignableFrom(userControlType) && parameters[0] is Button button)
+                {
+                    ConstructorInfo constructor = userControlType.GetConstructor(new Type[] { typeof(User) });
+                    if (constructor != null)
+                    {
+                        User value = (User)button.DataContext;
+                        ContentDialogService.userControlInDialog = new UserAddAndChange(value);
+                        ContentDialogService service = new ContentDialogService();
+                        service.OpenDialog();
+                    }
+                    else
+                    {
+                        new CustomMessageBoxView("Ошибка при открытии страницы").ShowDialog();
+                    }
+                }
+            }
+
         }
     }
 }

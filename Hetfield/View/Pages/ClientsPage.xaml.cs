@@ -27,9 +27,11 @@ namespace Hetfield.View.Pages
             DataContext = new EmployeePageClientsVM();
         }
 
-        private void HideUserPhoto_Click(object sender, RoutedEventArgs e)
+        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            UsersDataGrid.SelectedIndex = -1;
+            var row = (DataGridRow)sender;
+            row.DetailsVisibility = row.DetailsVisibility == Visibility.Collapsed ?
+                Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

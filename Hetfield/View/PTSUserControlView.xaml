@@ -1,0 +1,137 @@
+﻿<UserControl x:Class="Hetfield.View.PTSUserControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hetfield.View"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:modern="http://schemas.modernwpf.com/2019"
+             mc:Ignorable="d" 
+             d:DesignHeight="480" 
+             d:DesignWidth="400"
+             Height="480"
+             Width="400">
+    <Grid>
+
+        <StackPanel HorizontalAlignment="Left"
+                    VerticalAlignment="Top">
+            <Image Source="/Resources/Logo.png"
+                   Width="120"/>
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Top">
+            <ui:Button Icon="Circle12"
+                       IconForeground="Red"
+                       Padding="0"
+                       x:Name="CloseButton"
+                       Command="{Binding CloseCommand}"
+                       FontSize="20"
+                       IconFilled="True"
+                       BorderBrush="Transparent"
+                       Background="Transparent" />
+        </StackPanel>
+        <StackPanel
+                Margin="10, 100, 30, 20">
+            <modern:SimpleStackPanel HorizontalAlignment="Stretch"
+                                     VerticalAlignment="Center"
+                                     Margin="10"
+                                     Spacing="15">
+                <TextBlock FontSize="17" 
+                           TextWrapping="Wrap">
+                    <Run Foreground="White" 
+                         FontWeight="Bold"  
+                         Text="1. Модель: "/>
+                    <Run Foreground="White" 
+                         TextDecorations="Underline"  
+                         Text="{Binding SomeCar.IdCarPassportNavigation.CarModel}"/>
+                </TextBlock>
+
+                <TextBlock FontSize="17" 
+                           TextWrapping="Wrap">
+                    <Run Foreground="White" 
+                         FontWeight="Bold" 
+                         Text="2. Тип ТС: "/>
+                    <Run Foreground="White" 
+                         TextDecorations="Underline" 
+                         Text="{Binding SomeCar.IdCarPassportNavigation.IdCarTypeNavigation.TypeName}"/>
+                </TextBlock>
+
+                <TextBlock 
+                    FontSize="17"
+                    TextWrapping="Wrap">
+                    <Run Foreground="White" 
+                         FontWeight="Bold" 
+                         Text="3. Владелец: "/>
+                    <Run Foreground="White" 
+                         TextDecorations="Underline" 
+                         Text="{Binding SomeCar.IdCarPassportNavigation.IdOwnerNavigation.Surname}"/>
+                    <Run Foreground="White" 
+                         TextDecorations="Underline" 
+                         Text="{Binding SomeCar.IdCarPassportNavigation.IdOwnerNavigation.Name}"/>
+                </TextBlock>
+
+                <TextBlock FontSize="17" TextWrapping="Wrap">
+                    <Run Foreground="White" 
+                         FontWeight="Bold" 
+                         Text="4. Цвет: "/>
+                    <Run Foreground="White" 
+                         TextDecorations="Underline" 
+                         Text="{Binding SomeCar.IdCarPassportNavigation.IdCarColorNavigation.ColorName}"/>
+                </TextBlock>
+
+                <TextBlock FontSize="17" 
+                           TextWrapping="Wrap">
+                    <Run Foreground="White" 
+                         FontWeight="Bold" 
+                         Text="5. Год Изготовления ТС: "/>
+                    <Run Foreground="White" 
+                         TextDecorations="Underline" 
+                         Text="{Binding SomeCar.IdCarPassportNavigation.CarManufactureYear}"/>
+                </TextBlock>
+
+                <TextBlock FontSize="17" 
+                           TextWrapping="Wrap">
+                    <Run Foreground="White" 
+                         FontWeight="Bold" 
+                         Text="6. Vin: "/>
+                    <Run Foreground="White" 
+                         TextDecorations="Underline" 
+                         Text="{Binding SomeCar.IdCarPassportNavigation.VinNumber}"/>
+                </TextBlock>
+
+                <TextBlock FontSize="17" 
+                           TextWrapping="Wrap">
+                    <Run Foreground="White" 
+                         FontWeight="Bold" 
+                         Text="7. Объем двигателя: "/>
+                    <Run Foreground="White" 
+                         TextDecorations="Underline" 
+                         Text="{Binding SomeCar.IdCarPassportNavigation.EngineDisplacement}"/>
+                </TextBlock>
+
+                <TextBlock FontSize="17" 
+                           TextWrapping="Wrap">
+                    <Run Foreground="White" 
+                         FontWeight="Bold" 
+                         Text="8. Серия и номер ПТС: "/>
+                    <Run Foreground="White" 
+                         TextDecorations="Underline" 
+                         Text="{Binding SomeCar.IdCarPassportNavigation.PassportSeriasAndNumber}"/>
+                </TextBlock>
+
+                <TextBlock FontSize="17" 
+                           TextWrapping="Wrap">
+                    <Run Foreground="White" 
+                         FontWeight="Bold" 
+                         Text="9.Дата выдачи ПТС: "/>
+                    <Run Foreground="White" 
+                         TextDecorations="Underline" 
+                         Text="{Binding SomeCar.IdCarPassportNavigation.DateOfIssue, StringFormat='{}{0:dd.MM.yyyy}'}"/>
+                </TextBlock>
+
+            </modern:SimpleStackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -52,7 +52,7 @@ namespace Hetfield.ViewModel
 
         public EmployeeViewPagesVM()
         {
-            new Thread(Refresh).Start();
+            Refresh();
         }
 
 
@@ -63,7 +63,7 @@ namespace Hetfield.ViewModel
 
         public RelayCommand OpenChangeDialogCommand => new RelayCommand(obj => OpenChangeDialog(obj));
 
-        public RelayCommand RefreshCommand => new RelayCommand(obj => new Thread(Refresh).Start());
+        public RelayCommand RefreshCommand => new RelayCommand(obj => Refresh());
 
         #endregion
 
@@ -103,7 +103,7 @@ namespace Hetfield.ViewModel
             }
         }
 
-        private void OpenAddDialog(object parameter)
+        protected virtual void OpenAddDialog(object parameter)
         {
             if (parameter is Type userControlType && typeof(UserControl).IsAssignableFrom(userControlType))
             {
@@ -124,7 +124,7 @@ namespace Hetfield.ViewModel
             }
         }
 
-        private void OpenChangeDialog(object parameter)
+        protected virtual void OpenChangeDialog(object parameter)
         {
             if(parameter is object[] parameters && parameters.Length == 2)
             {

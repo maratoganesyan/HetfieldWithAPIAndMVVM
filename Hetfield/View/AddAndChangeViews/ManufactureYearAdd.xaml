@@ -33,6 +33,7 @@
         <modern:SimpleStackPanel
                     Grid.Row="1"
                                  Spacing="20"
+            Margin="10 0"
                     x:Name="MainPanel"
                     VerticalAlignment="Top">
             <StackPanel HorizontalAlignment="Center"

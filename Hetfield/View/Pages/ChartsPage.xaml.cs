@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Hetfield.ViewModel;
 
 namespace Hetfield.View.Pages
 {
@@ -23,6 +24,7 @@ namespace Hetfield.View.Pages
         public ChartsPage()
         {
             InitializeComponent();
+            DataContext = new ChartsVM(SalesPlot, AnnouncementPlot, OrderByDatePlot);
         }
     }
 }

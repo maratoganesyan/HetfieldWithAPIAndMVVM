@@ -22,24 +22,24 @@
         <Grid x:Name="ChartsHeightContainer" />
 
         <Grid Margin="5">
-            <ScrollViewer>
+            <ui:DynamicScrollViewer>
                 <StackPanel Margin="10 5 25 5">
                     <ScottPlot:WpfPlot x:Name="SalesPlot"
-                                       DataContext="{Binding SalesPlot}"
+                                       DataContext="{Binding SalesPlot, Mode=TwoWay}"
                                        Height="{Binding ElementName=ChartsHeightContainer, Path=ActualHeight}"
                                        IsEnabled="False">
                         
                     </ScottPlot:WpfPlot>
                     <ScottPlot:WpfPlot x:Name="AnnouncementPlot"
-                                       DataContext="{Binding AnnouncementPlot}"
+                                       DataContext="{Binding AnnouncementPlot, Mode=TwoWay}"
                                        Height="{Binding ElementName=ChartsHeightContainer, Path=ActualHeight}"
                                        IsEnabled="False" />
                     <ScottPlot:WpfPlot x:Name="OrderByDatePlot"
-                                       DataContext="{Binding OrderByDatePlot}"
+                                       DataContext="{Binding OrderByDatePlot, Mode=TwoWay}"
                                        Height="{Binding ElementName=ChartsHeightContainer, Path=ActualHeight}"
                                        IsEnabled="False" />
                 </StackPanel>
-            </ScrollViewer>
+            </ui:DynamicScrollViewer>
         </Grid>
     </Grid>
 </Page>
